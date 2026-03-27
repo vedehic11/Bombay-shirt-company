@@ -17,14 +17,14 @@ export default function Navigation({ theme = 'light', isAbsolute = true }: Navig
     'USE PANTS20 GET 20% OFF ON PANTS WITH EVERY SHIRT YOU BUY'
   ];
 
-  const textColor = theme === 'dark' ? 'text-gray-900' : 'text-white';
-  const hoverColor = theme === 'dark' ? 'hover:text-gray-500' : 'hover:text-white/70';
+  const textColor = theme === 'dark' ? 'text-[#4f5b44]' : 'text-stone-100';
+  const hoverColor = theme === 'dark' ? 'hover:text-[#6a745f]' : 'hover:text-stone-200';
 
   return (
     <>
-      <nav className={`${isAbsolute ? 'absolute z-50' : 'relative z-50 bg-white'} top-0 w-full transition-colors duration-300`}>
+      <nav className={`${isAbsolute ? 'absolute z-50' : 'relative z-50 bg-[#efeae3]/95 backdrop-blur-sm'} top-0 w-full transition-colors duration-300`}>
         {/* Promotion Banner */}
-        <div className="bg-[#111] text-white/90 py-2.5 text-[11px] font-medium tracking-widest overflow-hidden border-b border-white/10">
+        <div className="bg-[#ddd5ca] text-[#4f5b44] py-2.5 text-[11px] font-medium tracking-widest overflow-hidden border-b border-[#cfc5b8]">
           <div className="flex items-center animate-scroll whitespace-nowrap">
             {[...promotions, ...promotions, ...promotions].map((promo, idx) => (
               <span key={idx} className="inline-block px-4">
@@ -36,7 +36,7 @@ export default function Navigation({ theme = 'light', isAbsolute = true }: Navig
         </div>
 
         {/* Main Navbar */}
-        <div className={`w-full px-6 md:px-12 ${theme === 'dark' ? 'border-b border-gray-100' : ''}`}>
+        <div className={`w-full px-6 md:px-12 ${theme === 'dark' ? 'border-b border-[#cfc5b8]' : ''}`}>
           <div className={`flex items-center justify-between h-20 ${textColor}`}>
             {/* Left Box: Menu, Search, Phone */}
             <div className="flex items-center space-x-6 w-1/3">
@@ -86,32 +86,32 @@ export default function Navigation({ theme = 'light', isAbsolute = true }: Navig
 
         {/* Mobile Menu Dropdown */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-[#111] text-white border-t border-white/10">
+          <div className="absolute top-full left-0 w-full bg-[#efeae3] text-[#4f5b44] border-t border-[#cfc5b8] shadow-sm">
             <div className="p-6 space-y-4">
-              <a href="#" className="block text-lg font-light hover:text-gray-300">New Arrivals</a>
-              <a href="#" className="block text-lg font-light hover:text-gray-300">Shirts</a>
-              <a href="#" className="block text-lg font-light hover:text-gray-300">Pants</a>
+              <a href="#" className="block text-lg font-light hover:text-[#6a745f]">New Arrivals</a>
+              <a href="#" className="block text-lg font-light hover:text-[#6a745f]">Shirts</a>
+              <a href="#" className="block text-lg font-light hover:text-[#6a745f]">Pants</a>
             </div>
           </div>
         )}
       </nav>
 
       {isSearchOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20">
-          <div className="bg-white w-full max-w-2xl mx-4 rounded-lg shadow-xl">
-            <div className="flex items-center p-4 border-b">
-              <Search className="text-gray-400 mr-3" size={20} />
+        <div className="fixed inset-0 bg-stone-900/50 z-50 flex items-start justify-center pt-20">
+          <div className="bg-stone-50 w-full max-w-2xl mx-4 rounded-lg shadow-xl border border-stone-200">
+            <div className="flex items-center p-4 border-b border-stone-200">
+              <Search className="text-stone-400 mr-3" size={20} />
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="flex-1 outline-none text-black"
+                className="flex-1 outline-none bg-transparent text-stone-800 placeholder:text-stone-400"
                 autoFocus
               />
               <button onClick={() => setIsSearchOpen(false)}>
-                <X className="text-gray-400" size={20} />
+                <X className="text-stone-400" size={20} />
               </button>
             </div>
-            <div className="p-4 text-gray-500 text-sm">
+            <div className="p-4 text-stone-500 text-sm">
               Try searching for "shirts", "chinos", or "blazers"
             </div>
           </div>

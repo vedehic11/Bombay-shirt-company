@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --linen-bg: #e8e3dc;
+    --linen-surface: #efeae3;
+    --linen-border: #d1c8bc;
+    --olive-text: #4f5b44;
+    --olive-accent: #7a8572;
+    --olive-accent-dark: #66705e;
+    --linen-light: #f7f4ef;
+  }
+
+  body {
+    background-color: var(--linen-bg);
+    color: var(--olive-text);
+  }
+}
+
 @keyframes scroll {
   0% {
     transform: translateX(0);

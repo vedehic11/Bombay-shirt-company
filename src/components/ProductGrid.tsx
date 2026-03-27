@@ -88,9 +88,9 @@ export default function ProductGrid({ onProductClick }: ProductGridProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
         {[...Array(8)].map((_, i) => (
           <div key={i} className="animate-pulse">
-            <div className="bg-gray-100 aspect-[4/5] mb-4" />
-            <div className="h-3 bg-gray-200 mb-2 w-3/4" />
-            <div className="h-3 bg-gray-200 w-1/4" />
+            <div className="bg-stone-100 aspect-[4/5] mb-4" />
+            <div className="h-3 bg-stone-200 mb-2 w-3/4" />
+            <div className="h-3 bg-stone-200 w-1/4" />
           </div>
         ))}
       </div>

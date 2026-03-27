@@ -85,11 +85,11 @@ export default function CategoryScroller() {
     <section ref={sectionRef} className="relative isolate z-0 w-full h-[200vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-center" />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-stone-900/60" />
 
         <div className="relative z-10 flex items-start h-full pt-20 md:pt-24 px-8 md:px-20">
-          <div className="max-w-lg w-full bg-black/45 backdrop-blur-md text-white p-8 md:p-10 rounded-2xl shadow-xl">
-            <p className="text-lg md:text-xl tracking-widest text-gray-200 mb-8 font-light uppercase">CATEGORIES</p>
+          <div className="max-w-lg w-full bg-stone-900/45 backdrop-blur-md text-stone-100 p-8 md:p-10 rounded-2xl shadow-xl">
+            <p className="text-lg md:text-xl tracking-widest text-stone-200 mb-8 font-light uppercase">CATEGORIES</p>
             <div ref={viewportRef} className="h-[58vh] overflow-hidden">
               <nav
                 ref={listRef}
@@ -101,7 +101,7 @@ export default function CategoryScroller() {
                   <a
                     key={category}
                     href="#"
-                    className="block text-3xl md:text-4xl font-light leading-tight text-white/95 hover:text-white transition-colors"
+                    className="block text-3xl md:text-4xl font-light leading-tight text-stone-100/95 hover:text-stone-50 transition-colors"
                     style={{ letterSpacing: '0.01em' }}
                   >
                     {category}

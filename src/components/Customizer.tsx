@@ -30,11 +30,24 @@ const POCKET_OPTIONS = [
   { id: 'single_flap', name: 'Single Pocket with Flap' }
 ];
 
+const COLOR_OPTIONS = [
+  { id: 'white', name: 'White', hex: '#ffffff', border: '#e5e5e5' },
+  { id: 'navy', name: 'Navy Blue', hex: '#001f3f', border: '#001f3f' },
+  { id: 'black', name: 'Black', hex: '#1a1a1a', border: '#1a1a1a' },
+  { id: 'charcoal', name: 'Charcoal Grey', hex: '#36454f', border: '#36454f' },
+  { id: 'khaki', name: 'Khaki', hex: '#f0e68c', border: '#d4af37' },
+  { id: 'olive', name: 'Olive Green', hex: '#808000', border: '#808000' },
+  { id: 'dusty_blue', name: 'Dusty Blue', hex: '#a4b4c4', border: '#8092a8' },
+  { id: 'burgundy', name: 'Burgundy', hex: '#800020', border: '#800020' }
+];
+
 export default function Customizer({ onClose, productName, price }: CustomizerProps) {
   const [activeTab, setActiveTab] = useState<TabType>('Style');
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const [activeSubTab, setActiveSubTab] = useState<SubTabType>('Style');
   const [previewShirt, setPreviewShirt] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string>('navy');
+  const [selectedPocket, setSelectedPocket] = useState<string>('single_flap');
 
   // Simplified collar drawing for the grid
   const renderCollarIcon = () => (
@@ -90,28 +103,28 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex bg-[#f5f5f5] animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] flex bg-stone-100 animate-in fade-in duration-300">
       
       {/* LEFT PANEL */}
       <div className={`relative ${activeFeature ? 'w-1/2' : 'w-2/3'} flex flex-col transition-all duration-500`}>
         
         {/* Header Left */}
         <div className="flex items-center justify-between p-6 px-8 z-10">
-          <button onClick={onClose} className="p-2 hover:bg-gray-200 rounded-full transition-colors cursor-pointer">
+          <button onClick={onClose} className="p-2 hover:bg-stone-200 rounded-full transition-colors cursor-pointer">
             <X className="w-6 h-6" />
           </button>
           
-          <h1 className="text-sm font-semibold tracking-[0.2em] uppercase text-gray-900 absolute left-1/2 -translate-x-1/2">
+          <h1 className="text-sm font-semibold tracking-[0.2em] uppercase text-stone-900 absolute left-1/2 -translate-x-1/2">
             CUSTOMISE
           </h1>
 
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-semibold tracking-widest text-gray-400 uppercase">PREVIEW SHIRT</span>
+            <span className="text-[10px] font-semibold tracking-widest text-stone-500 uppercase">PREVIEW SHIRT</span>
             <button 
               onClick={() => setPreviewShirt(!previewShirt)}
-              className={`w-11 h-6 rounded-full border border-gray-300 p-0.5 transition-colors ${previewShirt ? 'bg-gray-900' : 'bg-transparent'}`}
+              className={`w-11 h-6 rounded-full border border-[#cfc5b8] p-0.5 transition-colors ${previewShirt ? 'bg-[#7a8572]' : 'bg-transparent'}`}
             >
-              <div className={`w-4 h-4 rounded-full transition-transform ${previewShirt ? 'translate-x-5 bg-white' : 'bg-gray-400'}`} />
+              <div className={`w-4 h-4 rounded-full transition-transform ${previewShirt ? 'translate-x-5 bg-stone-50' : 'bg-stone-400'}`} />
             </button>
           </div>
         </div>
@@ -119,13 +132,13 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
         {/* Top Tabs */}
         {!activeFeature && (
           <div className="flex justify-center mt-2 z-10 px-4">
-            <div className="flex border border-gray-200 rounded-full rounded-l-full rounded-r-full p-1 bg-[#f5f5f5]">
+            <div className="flex border border-stone-300 rounded-full rounded-l-full rounded-r-full p-1 bg-stone-100">
               {['Style', 'Contrast', 'Monogram'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as TabType)}
                   className={`px-12 py-2.5 rounded-full text-xs font-medium tracking-wide transition-all ${
-                    activeTab === tab ? 'bg-black text-white' : 'text-gray-500 hover:text-gray-900'
+                    activeTab === tab ? 'bg-[#7a8572] text-[#f7f4ef]' : 'text-stone-500 hover:text-stone-900'
                   }`}
                 >
                   {tab}
@@ -158,6 +171,7 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
               {/* Hotpoints - STYLE TAB */}
               {activeTab === 'Style' && (
                 <>
+                  <Hotspot top="15%" left="50%" label="color" onClick={() => setActiveFeature('color')} />
                   <Hotspot top="20%" left="50%" label="COLLAR" onClick={() => setActiveFeature('collar')} />
                   <Hotspot top="38%" left="62%" label="POCKET" onClick={() => setActiveFeature('pocket')} />
                   <Hotspot top="48%" left="50%" label="PLACKET" onClick={() => setActiveFeature('placket')} />
@@ -182,7 +196,7 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
       </div>
 
       {/* RIGHT PANEL */}
-      <div className={`relative ${activeFeature ? 'w-1/2' : 'w-1/3'} bg-white h-full shadow-2xl transition-all duration-500 flex flex-col`}>
+      <div className={`relative ${activeFeature ? 'w-1/2' : 'w-1/3'} bg-stone-50 h-full shadow-2xl transition-all duration-500 flex flex-col`}>
         
         {/* Default View (No feature selected) */}
         {!activeFeature ? (
@@ -192,29 +206,29 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
               <span className="px-3 py-1 bg-[#eaf7ed] text-[#4ea065] text-xs font-medium rounded-full">New</span>
             </div>
 
-            <h2 className="text-[28px] font-light text-gray-900 mb-3 leading-tight">{productName}</h2>
-            <p className="text-gray-900 mb-12">
+            <h2 className="text-[28px] font-light text-stone-900 mb-3 leading-tight">{productName}</h2>
+            <p className="text-stone-900 mb-12">
               <span className="text-[20px] font-medium">₹ {price.toLocaleString('en-IN')}</span>
-              <span className="text-[11px] text-gray-500 ml-2 uppercase tracking-wide">Incl. of all taxes</span>
+              <span className="text-[11px] text-stone-500 ml-2 uppercase tracking-wide">Incl. of all taxes</span>
             </p>
 
-            <div className="h-px bg-gray-200 mb-12 w-full max-w-[100px]"></div>
+            <div className="h-px bg-stone-300 mb-12 w-full max-w-[100px]"></div>
 
             <div className="flex gap-4 mt-auto mb-8">
-              <button className="flex-1 bg-black text-white py-4 rounded-full text-xs font-bold tracking-[0.15em] uppercase hover:bg-gray-900 transition-colors shadow-lg shadow-black/10">
+              <button className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#66705e] transition-colors shadow-lg shadow-[#66705e]/20">
                 ADD TO BAG
               </button>
-              <button className="w-14 h-14 flex items-center justify-center border border-gray-200 rounded-full hover:border-gray-900 transition-colors">
-                <Heart className="w-5 h-5 text-gray-600" />
+              <button className="w-14 h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
+                <Heart className="w-5 h-5 text-stone-600" />
               </button>
             </div>
           </div>
         ) : (
           /* Editing View (Feature selected e.g. Collar, Pocket) */
-          <div className="flex-1 flex flex-col h-full bg-white">
+          <div className="flex-1 flex flex-col h-full bg-stone-50">
             
             {/* Top Navigation for editing inside right panel */}
-            <div className="flex items-center justify-between border-b border-gray-100 px-8 py-5 min-h-[72px]">
+            <div className="flex items-center justify-between border-b border-stone-200 px-8 py-5 min-h-[72px]">
               {activeFeature === 'collar' ? (
                 <>
                   <div className="flex space-x-12">
@@ -223,24 +237,28 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
                         key={subtab}
                         onClick={() => setActiveSubTab(subtab as SubTabType)}
                         className={`text-sm font-medium tracking-wide transition-colors ${
-                          activeSubTab === subtab ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
+                          activeSubTab === subtab ? 'text-stone-900' : 'text-stone-400 hover:text-stone-600'
                         }`}
                       >
                         {subtab}
                       </button>
                     ))}
                   </div>
-                  <button className="text-sm font-semibold tracking-wide text-blue-600 hover:text-blue-800">
+                  <button className="text-sm font-semibold tracking-wide text-amber-700 hover:text-amber-800">
                     Guide
                   </button>
                 </>
               ) : activeFeature === 'pocket' ? (
                 <div className="w-full text-center">
-                  <span className="text-sm font-medium text-gray-900">Pocket</span>
+                  <span className="text-sm font-medium text-stone-900">Pocket</span>
+                </div>
+              ) : activeFeature === 'color' ? (
+                <div className="w-full text-center">
+                  <span className="text-sm font-medium text-stone-900">Color</span>
                 </div>
               ) : (
                 <div className="w-full text-center capitalize">
-                  <span className="text-sm font-medium text-gray-900">{activeFeature}</span>
+                  <span className="text-sm font-medium text-stone-900">{activeFeature}</span>
                 </div>
               )}
             </div>
@@ -253,44 +271,89 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
                     <button 
                       key={opt.id}
                       className={`aspect-square border rounded-[4px] p-4 flex flex-col items-center justify-center gap-4 transition-all
-                        ${idx === 0 ? 'border-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-400'}
+                        ${idx === 0 ? 'border-[#7a8572] shadow-sm' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
                       `}
                     >
                       {renderCollarIcon()}
-                      <span className="text-[11px] text-gray-600 font-medium tracking-wide text-center">{opt.name}</span>
+                      <span className="text-[11px] text-stone-600 font-medium tracking-wide text-center">{opt.name}</span>
                     </button>
                   ))}
                 </div>
               )}
 
               {activeFeature === 'pocket' && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
                   {POCKET_OPTIONS.map((opt, idx) => (
                     <button 
                       key={opt.id}
-                      className={`aspect-square border rounded-[4px] flex flex-col items-center justify-center gap-6 transition-all
-                        ${idx === 0 ? 'border-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-400'}
+                      onClick={() => setSelectedPocket(opt.id)}
+                      className={`aspect-square border-2 rounded-lg flex flex-col items-center justify-center gap-4 p-4 transition-all group
+                        ${selectedPocket === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-lg' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
                       `}
                     >
-                      <div className="text-gray-800">{renderPocketIcon(opt.id)}</div>
-                      <span className="text-[10px] text-gray-600 font-medium tracking-wide text-center px-2">{opt.name}</span>
+                      <div className={`text-4xl transition-colors ${selectedPocket === opt.id ? 'text-stone-900' : 'text-stone-400'}`}>
+                        {renderPocketIcon(opt.id)}
+                      </div>
+                      <span className="text-[11px] text-stone-700 font-semibold tracking-wide text-center">{opt.name}</span>
+                      {selectedPocket === opt.id && (
+                        <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#7a8572]"></div>
+                      )}
                     </button>
                   ))}
+                </div>
+              )}
+
+              {activeFeature === 'color' && (
+                <div className="max-w-4xl mx-auto">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    {COLOR_OPTIONS.map((color) => (
+                      <button
+                        key={color.id}
+                        onClick={() => setSelectedColor(color.id)}
+                        className="flex flex-col items-center gap-3 group transition-all"
+                      >
+                        <div 
+                          className={`w-20 h-20 rounded-lg border-2 shadow-md transition-all group-hover:scale-105 flex items-center justify-center
+                            ${selectedColor === color.id ? 'border-[#7a8572] ring-2 ring-[#d1c8bc]' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
+                          `}
+                          style={{ backgroundColor: color.hex, borderColor: color.border }}
+                        >
+                          {selectedColor === color.id && (
+                            <div className="text-2xl text-stone-200 mix-blend-screen">✓</div>
+                          )}
+                        </div>
+                        <span className="text-[11px] text-stone-600 font-medium tracking-wide text-center">{color.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="bg-stone-100 p-6 rounded-lg border border-stone-300">
+                    <p className="text-xs text-stone-500 font-semibold tracking-wide uppercase mb-2">Preview</p>
+                    <div className="flex items-center gap-8">
+                      <div 
+                        className="w-32 h-40 rounded-lg shadow-lg" 
+                        style={{ backgroundColor: COLOR_OPTIONS.find(c => c.id === selectedColor)?.hex }}
+                      ></div>
+                      <div>
+                        <p className="text-sm text-stone-900 font-medium">Your Selected Color:</p>
+                        <p className="text-lg font-semibold text-stone-900 mt-1">{COLOR_OPTIONS.find(c => c.id === selectedColor)?.name}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
             {/* Sticky Bottom Actions */}
-            <div className="p-8 border-t border-gray-100 bg-white grid grid-cols-2 gap-4">
+            <div className="p-8 border-t border-stone-200 bg-stone-50 grid grid-cols-2 gap-4">
               <button 
                 onClick={() => setActiveFeature(null)}
-                className="py-4 border-2 border-gray-900 rounded-full text-xs font-bold tracking-[0.15em] uppercase text-gray-900 hover:bg-gray-50 transition-colors"
+                className="py-4 border-2 border-[#7a8572] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-[#5f6853] hover:bg-[#efeae3] transition-colors"
               >
                 CANCEL
               </button>
               <button 
                 onClick={() => setActiveFeature(null)}
-                className="py-4 bg-[#1a1a1a] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-white hover:bg-black transition-colors"
+                className="py-4 bg-[#7a8572] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-[#f7f4ef] hover:bg-[#66705e] transition-colors"
               >
                 APPLY
               </button>
@@ -311,10 +374,10 @@ function Hotspot({ top, left, label, onClick }: { top: string; left: string; lab
       style={{ top, left }}
       onClick={onClick}
     >
-      <div className="relative z-10 w-8 h-8 rounded-full bg-[#df564d] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+      <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
         <span className="text-xl font-light leading-none mb-0.5">+</span>
       </div>
-      <div className="bg-white/95 backdrop-blur-md h-7 rounded-r-full px-4 flex items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-[#1a1a1a] shadow-sm uppercase group-hover:bg-gray-50 transition-colors">
+      <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-r-full px-4 flex items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors">
         {label}
       </div>
     </div>

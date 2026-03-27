@@ -18,13 +18,13 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
   return (
     <>
-      <div className="min-h-screen bg-white pt-8 pb-12">
+      <div className="min-h-screen bg-stone-50 pt-8 pb-12">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Back button */}
         <button 
           onClick={onBack}
-          className="flex items-center text-gray-500 hover:text-gray-900 mb-8 transition-colors text-sm uppercase tracking-widest relative z-[60] cursor-pointer"
+          className="flex items-center text-stone-500 hover:text-stone-900 mb-8 transition-colors text-sm uppercase tracking-widest relative z-[60] cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4 mr-2" />
           Back to Home
@@ -34,28 +34,28 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
           
           {/* Images Section - Left Column */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-100 aspect-[4/5] overflow-hidden">
+            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80" 
                 alt="Collar Detail" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="bg-gray-100 aspect-[4/5] overflow-hidden">
+            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80" 
                 alt="Shirt Full View" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="bg-gray-100 aspect-[4/5] overflow-hidden">
+            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&q=80" 
                 alt="Fabric Detail" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="bg-gray-100 aspect-[4/5] overflow-hidden">
+            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&q=80" 
                 alt="Cuff Detail" 
@@ -79,21 +79,21 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
               </div>
 
               {/* Title & Price */}
-              <h1 className="text-2xl font-light text-gray-900 mb-2">
+              <h1 className="text-2xl font-light text-stone-900 mb-2">
                 Brushed Herringbone Shirt - Navy
               </h1>
-              <p className="text-gray-900 mb-1">
+              <p className="text-stone-900 mb-1">
                 <span className="text-lg">₹ 3,490</span>
-                <span className="text-xs text-gray-500 ml-2">Incl. of all taxes</span>
+                <span className="text-xs text-stone-500 ml-2">Incl. of all taxes</span>
               </p>
 
-              <div className="h-px bg-gray-200 my-8"></div>
+              <div className="h-px bg-stone-300 my-8"></div>
 
               {/* Size Selection */}
               <div className="mb-8">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-sm text-gray-900">Select Standard Size</span>
-                  <button className="text-xs text-blue-600 font-medium tracking-wide">SIZE GUIDE</button>
+                  <span className="text-sm text-stone-900">Select Standard Size</span>
+                  <button className="text-xs text-amber-700 font-medium tracking-wide hover:text-amber-800">SIZE GUIDE</button>
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {sizes.map(size => (
@@ -102,8 +102,8 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
                       onClick={() => setSelectedSize(size)}
                       className={`w-12 h-12 flex items-center justify-center border text-sm transition-colors rounded-full
                         ${selectedSize === size 
-                          ? 'border-gray-900 bg-gray-900 text-white' 
-                          : 'border-gray-300 text-gray-700 hover:border-gray-900 hover:text-gray-900'
+                          ? 'border-[#7a8572] bg-[#7a8572] text-[#f7f4ef]' 
+                          : 'border-[#cfc5b8] text-[#6a745f] hover:border-[#7a8572] hover:text-[#4f5b44]'
                         }
                       `}
                     >
@@ -115,19 +115,19 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
               {/* Custom Size Option */}
               <div className="flex justify-between items-center mb-8">
-                <span className="text-sm text-gray-900">Prefer a Custom Size?</span>
-                <button className="text-xs text-blue-600 font-medium tracking-wide">ADD CUSTOM SIZE</button>
+                <span className="text-sm text-stone-900">Prefer a Custom Size?</span>
+                <button className="text-xs text-amber-700 font-medium tracking-wide hover:text-amber-800">ADD CUSTOM SIZE</button>
               </div>
 
               {/* Design Details Box */}
-              <div className="border border-gray-200 rounded-lg p-5 mb-8 bg-white">
-                <h3 className="text-sm text-gray-900 font-medium mb-2">Design Details</h3>
-                <p className="text-sm text-gray-500 mb-4">
+              <div className="border border-stone-300 rounded-lg p-5 mb-8 bg-stone-50">
+                <h3 className="text-sm text-stone-900 font-medium mb-2">Design Details</h3>
+                <p className="text-sm text-stone-500 mb-4">
                   Soft Polo Collar | Single Button Cuffs | Regular Placket
                 </p>
                 <button 
                   onClick={() => setIsCustomizing(true)}
-                  className="w-full border border-gray-900 text-gray-900 py-3 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-gray-50 transition-colors"
+                  className="w-full border border-[#7a8572] text-[#5f6853] py-3 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-[#efeae3] transition-colors"
                 >
                   EDIT DESIGN
                 </button>
@@ -135,11 +135,11 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
               {/* Add to Bag */}
               <div className="flex gap-4">
-                <button className="flex-1 bg-[#1a1a1a] text-white py-4 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-black transition-colors">
+                <button className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-[#66705e] transition-colors">
                   ADD TO BAG
                 </button>
-                <button className="w-14 h-14 flex items-center justify-center border border-gray-300 rounded-full hover:border-gray-900 transition-colors">
-                  <Heart className="w-5 h-5 text-gray-600" />
+                <button className="w-14 h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
+                  <Heart className="w-5 h-5 text-stone-600" />
                 </button>
               </div>
 
@@ -149,7 +149,7 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
         {/* Looking For More Section */}
         <div className="mt-32">
-          <h2 className="text-2xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-4">Looking For More</h2>
+          <h2 className="text-2xl font-light text-stone-900 mb-8 border-b border-stone-300 pb-4">Looking For More</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
               { name: 'Solid Shirts', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80' },
@@ -159,10 +159,10 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
               { name: 'All Shirts', img: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&q=80' }
             ].map((cat, i) => (
               <div key={i} className="group cursor-pointer">
-                <div className="aspect-[4/5] bg-gray-100 mb-3 overflow-hidden">
+                <div className="aspect-[4/5] bg-stone-100 mb-3 overflow-hidden">
                   <img src={cat.img} alt={cat.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
-                <p className="text-sm text-gray-500 group-hover:text-gray-900 transition-colors">{cat.name}</p>
+                <p className="text-sm text-stone-500 group-hover:text-stone-900 transition-colors">{cat.name}</p>
               </div>
             ))}
           </div>
@@ -170,14 +170,14 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
         {/* Pair With Section */}
         <div className="mt-24">
-          <h2 className="text-2xl font-light text-gray-900 mb-8 border-b border-gray-200 pb-4">Pair With</h2>
+          <h2 className="text-2xl font-light text-stone-900 mb-8 border-b border-stone-300 pb-4">Pair With</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&q=80' },
               { img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80' },
               { img: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80' }
             ].map((pair, i) => (
-              <div key={i} className="aspect-[3/4] bg-gray-100 overflow-hidden cursor-pointer group">
+              <div key={i} className="aspect-[3/4] bg-stone-100 overflow-hidden cursor-pointer group">
                 <img src={pair.img} alt="Pair with pants" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               </div>
             ))}
