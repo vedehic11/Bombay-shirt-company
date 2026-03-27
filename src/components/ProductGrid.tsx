@@ -17,61 +17,34 @@ interface ProductGridProps {
 const normalizePrice = (value: number) => Math.min(3000, Math.max(1000, value));
 
 const fallbackProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Brushed Herringbone Linen - Navy',
-    price: 3000,
-    sale_price: 2490,
-    image_url: '/shirts/shirt1/1.png',
-  },
-  {
-    id: '2',
-    name: 'Classic White Pure Linen',
-    price: 2890,
-    sale_price: 1990,
-    image_url: '/shirts/shirt2/1.png',
-  },
+  
   {
     id: '3',
-    name: 'Olive Green Premium Linen',
-    price: 2990,
-    sale_price: 2490,
+    name: 'White Premium Linen',
+    price: 1390,
+    sale_price: 1190,
     image_url: '/shirts/shirt3/1.png',
   },
   {
     id: '4',
-    name: 'Beige Blend Casual Linen',
-    price: 2190,
-    sale_price: 1590,
+    name: 'Light Blue Striped Linen',
+    price: 1490,
+    sale_price: 1290,
     image_url: '/shirts/shirt4/1.png',
   },
   {
     id: '5',
-    name: 'Light Blue Striped Linen',
-    price: 2790,
-    sale_price: 1890,
+    name: 'Beige Blend Casual Linen',
+    price: 1790,
+    sale_price: 1590,
     image_url: '/shirts/shirt5/1.png',
   },
   {
-    id: '6',
-    name: 'Charcoal Grey Linen Resort',
-    price: 2590,
-    sale_price: 1790,
-    image_url: '/shirts/shirt6/1.png',
-  },
-  {
     id: '7',
-    name: 'Mustard Yellow Pure Linen',
-    price: 2690,
-    sale_price: 2190,
+    name: 'Olive Green Premium Linen',
+    price: 1690,
+    sale_price: 1190,
     image_url: '/shirts/shirt7/1.png',
-  },
-  {
-    id: '8',
-    name: 'Rustic Red Breathable Linen',
-    price: 2390,
-    sale_price: 1390,
-    image_url: '/shirts/shirt8/1.png',
   }
 ];
 

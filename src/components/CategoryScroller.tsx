@@ -2,18 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 
 // Elegant, premium categories
 const categories = [
-  'Ready to Wear Shirts',
-  'Custom Made Shirts',
-  'Winterwear',
-  'Formal Pants',
-  'Casual Pants',
-  'Jeans',
-  'Jackets',
-  'Tees & Polos',
-  'Blazers',
-  'Linen Shirts',
-  'Chinos',
-  'Kurta Shirts'
+  'Linen Shirt',
+  'Linen Kurta Shirt',
+  'Linen Pants',
+  'Linen Shorts'
 ];
 
 export default function CategoryScroller() {
@@ -80,22 +72,28 @@ export default function CategoryScroller() {
 
   const easedProgress = Math.min(Math.max((progress - 0.08) / 0.84, 0), 1);
   const translateY = -(maxTranslate * easedProgress);
+  const shouldAnimate = categories.length > 6;
+  const hasScrollableList = shouldAnimate && maxTranslate > 0;
 
   return (
-    <section ref={sectionRef} className="relative isolate z-0 w-full h-[200vh]">
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative isolate z-0 w-full"
+      style={{ height: hasScrollableList ? `calc(100vh + ${maxTranslate + 220}px)` : 'auto' }}
+    >
+      <div className={`${hasScrollableList ? 'sticky top-0 h-screen' : 'relative min-h-[72vh]'} overflow-hidden`}>
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-stone-900/60" />
 
-        <div className="relative z-10 flex items-start h-full pt-20 md:pt-24 px-8 md:px-20">
+        <div className={`relative z-10 flex ${hasScrollableList ? 'items-start h-full pt-20 md:pt-24' : 'items-center py-16 md:py-20'} px-8 md:px-20`}>
           <div className="max-w-lg w-full bg-stone-900/45 backdrop-blur-md text-stone-100 p-8 md:p-10 rounded-2xl shadow-xl">
             <p className="text-lg md:text-xl tracking-widest text-stone-200 mb-8 font-light uppercase">CATEGORIES</p>
-            <div ref={viewportRef} className="h-[58vh] overflow-hidden">
+            <div ref={viewportRef} className={hasScrollableList ? 'h-[58vh] overflow-hidden' : 'h-auto overflow-visible'}>
               <nav
                 ref={listRef}
                 aria-label="Category navigation"
                 className="space-y-5 will-change-transform"
-                style={{ transform: `translate3d(0, ${translateY}px, 0)` }}
+                style={hasScrollableList ? { transform: `translate3d(0, ${translateY}px, 0)` } : undefined}
               >
                 {categories.map((category) => (
                   <a

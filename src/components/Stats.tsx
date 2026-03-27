@@ -1,25 +1,25 @@
-import { Globe, Package, Shield, Star } from 'lucide-react';
+import { Ruler, Palette, ShieldCheck, Smile } from 'lucide-react';
 
 const stats = [
   {
-    icon: Globe,
-    value: '150+',
-    label: 'Countries Shipped'
+    icon: Ruler,
+    value: 'Perfect',
+    label: 'Fit'
   },
   {
-    icon: Package,
-    value: '2M+',
-    label: 'Orders Delivered'
+    icon: Palette,
+    value: 'Rich',
+    label: 'Color'
   },
   {
-    icon: Shield,
-    value: '100%',
-    label: 'Fit Guarantee'
+    icon: ShieldCheck,
+    value: 'Built',
+    label: 'Durable'
   },
   {
-    icon: Star,
-    value: '4.8',
-    label: 'Customer Rating'
+    icon: Smile,
+    value: 'All-Day',
+    label: 'Comfortable'
   }
 ];
 
