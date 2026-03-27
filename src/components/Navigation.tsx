@@ -62,7 +62,7 @@ export default function Navigation({ theme = 'light', isAbsolute = true }: Navig
             {/* Center Box: Brand Logo */}
             <div className="flex-1 flex justify-center w-1/3">
               <h1 className="text-[22px] md:text-2xl font-light tracking-[0.2em] transform scale-y-110">
-                BOMBAY SHIRT COMPANY
+                linNcraft
               </h1>
             </div>
 

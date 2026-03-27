@@ -3,12 +3,43 @@ import { Heart, ChevronLeft } from 'lucide-react';
 import Customizer from './Customizer';
 
 interface ProductDetailProps {
+  productId: string;
   onBack: () => void;
+  onShopRedirect: () => void;
 }
 
-export default function ProductDetail({ onBack }: ProductDetailProps) {
+const PRODUCT_DETAILS: Record<string, { name: string; price: number; images: string[] }> = {
+  '1': {
+    name: 'Brushed Herringbone Linen - Navy',
+    price: 3000,
+    images: ['/shirts/shirt1/1.png', '/shirts/shirt1/2.png', '/shirts/shirt1/3.png', '/shirts/shirt1/4.png']
+  },
+  '2': {
+    name: 'Classic White Pure Linen',
+    price: 2890,
+    images: ['/shirts/shirt2/1.png', '/shirts/shirt2/2.png', '/shirts/shirt2/3.png', '/shirts/shirt2/4.png']
+  },
+  '3': {
+    name: 'Olive Green Premium Linen',
+    price: 2990,
+    images: ['/shirts/shirt3/1.png', '/shirts/shirt3/2.png', '/shirts/shirt3/3.png', '/shirts/shirt3/4.png']
+  },
+  '4': { name: 'Beige Blend Casual Linen', price: 2190, images: ['/shirts/shirt4/1.png'] },
+  '5': { name: 'Light Blue Striped Linen', price: 2790, images: ['/shirts/shirt5/1.png'] },
+  '6': { name: 'Charcoal Grey Linen Resort', price: 2590, images: ['/shirts/shirt6/1.png'] },
+  '7': { name: 'Mustard Yellow Pure Linen', price: 2690, images: ['/shirts/shirt7/1.png'] },
+  '8': { name: 'Rustic Red Breathable Linen', price: 2390, images: ['/shirts/shirt8/1.png'] }
+};
+
+export default function ProductDetail({ productId, onBack, onShopRedirect }: ProductDetailProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [isCustomizing, setIsCustomizing] = useState(false);
+
+  const currentProduct = PRODUCT_DETAILS[productId] || PRODUCT_DETAILS['1'];
+  const galleryImages =
+    currentProduct.images.length >= 4
+      ? currentProduct.images.slice(0, 4)
+      : Array.from({ length: 4 }, () => currentProduct.images[0]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,34 +65,15 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
           
           {/* Images Section - Left Column */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80" 
-                alt="Collar Detail" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80" 
-                alt="Shirt Full View" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&q=80" 
-                alt="Fabric Detail" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="bg-stone-100 aspect-[4/5] overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&q=80" 
-                alt="Cuff Detail" 
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {galleryImages.map((image, index) => (
+              <div key={index} className="bg-stone-100 aspect-[4/5] overflow-hidden">
+                <img
+                  src={image}
+                  alt={`${currentProduct.name} ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
           </div>
 
           {/* Product Info Section - Right Column */}
@@ -80,10 +92,10 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
               {/* Title & Price */}
               <h1 className="text-2xl font-light text-stone-900 mb-2">
-                Brushed Herringbone Shirt - Navy
+                {currentProduct.name}
               </h1>
               <p className="text-stone-900 mb-1">
-                <span className="text-lg">₹ 3,490</span>
+                <span className="text-lg">₹ {currentProduct.price.toLocaleString('en-IN')}</span>
                 <span className="text-xs text-stone-500 ml-2">Incl. of all taxes</span>
               </p>
 
@@ -135,7 +147,10 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
               {/* Add to Bag */}
               <div className="flex gap-4">
-                <button className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-[#66705e] transition-colors">
+                <button
+                  onClick={onShopRedirect}
+                  className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-[#66705e] transition-colors"
+                >
                   ADD TO BAG
                 </button>
                 <button className="w-14 h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
@@ -186,12 +201,13 @@ export default function ProductDetail({ onBack }: ProductDetailProps) {
 
       </div>
     </div>
-    
     {isCustomizing && (
-      <Customizer 
-        onClose={() => setIsCustomizing(false)} 
-        productName="Brushed Herringbone Shirt - Navy"
-        price={3490}
+      <Customizer
+        onClose={() => setIsCustomizing(false)}
+        productName={currentProduct.name}
+        price={currentProduct.price}
+        baseImage={currentProduct.images[0]}
+        onShopRedirect={onShopRedirect}
       />
     )}
   </>

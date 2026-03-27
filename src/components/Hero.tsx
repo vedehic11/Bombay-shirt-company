@@ -26,7 +26,11 @@ const slides = [
   }
 ];
 
-export default function Hero() {
+interface HeroProps {
+  onShopRedirect: () => void;
+}
+
+export default function Hero({ onShopRedirect }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -103,7 +107,10 @@ export default function Hero() {
               <p className="text-base md:text-lg mb-8 text-stone-100/90 font-light max-w-lg">
                 {slide.subtitle}
               </p>
-              <button className="px-8 py-3.5 border border-stone-100 text-stone-100 text-sm font-medium tracking-widest hover:bg-stone-100 hover:text-stone-900 transition-colors rounded-full uppercase">
+              <button
+                onClick={onShopRedirect}
+                className="px-8 py-3.5 border border-stone-100 text-stone-100 text-sm font-medium tracking-widest hover:bg-stone-100 hover:text-stone-900 transition-colors rounded-full uppercase"
+              >
                 {slide.cta}
               </button>
             </div>

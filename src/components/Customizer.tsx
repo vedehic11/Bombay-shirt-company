@@ -5,6 +5,8 @@ interface CustomizerProps {
   onClose: () => void;
   productName: string;
   price: number;
+  onShopRedirect?: () => void;
+  baseImage?: string;
 }
 
 type TabType = 'Style' | 'Contrast' | 'Monogram';
@@ -41,13 +43,139 @@ const COLOR_OPTIONS = [
   { id: 'burgundy', name: 'Burgundy', hex: '#800020', border: '#800020' }
 ];
 
-export default function Customizer({ onClose, productName, price }: CustomizerProps) {
+const PLACKET_OPTIONS = [
+  { id: 'regular', name: 'Regular Placket' },
+  { id: 'french', name: 'French Front' },
+  { id: 'hidden', name: 'Hidden Placket' },
+  { id: 'contrast', name: 'Contrast Placket' }
+];
+
+const BUTTON_OPTIONS = [
+  { id: 'mother_pearl', name: 'Mother of Pearl' },
+  { id: 'resin', name: 'Resin Button' },
+  { id: 'matte', name: 'Matte Button' },
+  { id: 'metal', name: 'Metal Accent' }
+];
+
+const CUFF_OPTIONS = [
+  { id: 'single_round', name: 'Single Round Cuff' },
+  { id: 'single_square', name: 'Single Square Cuff' },
+  { id: 'double_cuff', name: 'Double Cuff' },
+  { id: 'convertible', name: 'Convertible Cuff' }
+];
+
+const BACK_OPTIONS = [
+  { id: 'plain', name: 'Plain Back' },
+  { id: 'box_pleat', name: 'Box Pleat' },
+  { id: 'side_pleats', name: 'Side Pleats' },
+  { id: 'darted', name: 'Darted Back' }
+];
+
+const BASE_CUSTOMIZER_IMAGE = 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1400&q=80';
+const FALLBACK_FEATURE_IMAGE = 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1400&q=80';
+
+const FEATURE_DEFAULT_IMAGES: Record<string, string> = {
+  collar: '/customizer/collars/polo-collar.png',
+  pocket: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&crop=edges&w=800&h=800',
+  placket: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80',
+  buttons: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&w=1000&q=80',
+  cuff: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1000&q=80',
+  back: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&w=1000&q=80',
+  color: BASE_CUSTOMIZER_IMAGE,
+  default: FALLBACK_FEATURE_IMAGE
+};
+
+const COLLAR_IMAGES: Record<string, string> = {
+  polo: '/customizer/collars/polo-collar.png',
+  spread: '/customizer/collars/spread-collar.png',
+  bandhgala: '/customizer/collars/bandgala.png',
+  club: '/customizer/collars/club-collar.png',
+  concealed: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=faces&w=1200&q=80',
+  cuban: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=center&w=1200&q=80',
+  hipster: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=center&w=1200&q=80',
+  hipster_rounded: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&crop=top&w=1200&q=80',
+  madmen: '/customizer/collars/madmen.png',
+  prince: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=top&w=1200&q=80'
+};
+
+const POCKET_IMAGES: Record<string, string> = {
+  no_pocket: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&w=1200&q=80',
+  double_flap: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=right&w=1200&q=80',
+  single: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=center&w=1200&q=80',
+  single_flap: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=left&w=1200&q=80'
+};
+
+const PLACKET_IMAGES: Record<string, string> = {
+  regular: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&crop=center&w=1200&q=80',
+  french: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&crop=left&w=1200&q=80',
+  hidden: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&crop=right&w=1200&q=80',
+  contrast: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&crop=top&w=1200&q=80'
+};
+
+const BUTTON_IMAGES: Record<string, string> = {
+  mother_pearl: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=center&w=1200&q=80',
+  resin: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=left&w=1200&q=80',
+  matte: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=right&w=1200&q=80',
+  metal: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=top&w=1200&q=80'
+};
+
+const CUFF_IMAGES: Record<string, string> = {
+  single_round: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=center&w=1200&q=80',
+  single_square: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=left&w=1200&q=80',
+  double_cuff: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=right&w=1200&q=80',
+  convertible: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=top&w=1200&q=80'
+};
+
+const BACK_IMAGES: Record<string, string> = {
+  plain: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=center&w=1200&q=80',
+  box_pleat: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=left&w=1200&q=80',
+  side_pleats: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=right&w=1200&q=80',
+  darted: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=top&w=1200&q=80'
+};
+
+const COLOR_IMAGES: Record<string, string> = {
+  white: BASE_CUSTOMIZER_IMAGE,
+  navy: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1200&q=80',
+  black: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&w=1200&q=80',
+  charcoal: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&w=1200&q=80',
+  khaki: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?auto=format&fit=crop&w=1200&q=80',
+  olive: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1200&q=80',
+  dusty_blue: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1200&q=80',
+  burgundy: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&crop=right&w=1200&q=80'
+};
+
+const getOptionPlaceholderImage = (feature: string, option: string) =>
+  `https://placehold.co/1200x1600/e8e3dc/4f5b44?text=${encodeURIComponent(
+    `${feature.toUpperCase()} - ${option.replace(/_/g, ' ').toUpperCase()}`
+  )}`;
+
+export default function Customizer({ onClose, productName, price, onShopRedirect, baseImage }: CustomizerProps) {
   const [activeTab, setActiveTab] = useState<TabType>('Style');
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const [activeSubTab, setActiveSubTab] = useState<SubTabType>('Style');
   const [previewShirt, setPreviewShirt] = useState(false);
+  const [selectedCollar, setSelectedCollar] = useState<string>('polo');
   const [selectedColor, setSelectedColor] = useState<string>('navy');
   const [selectedPocket, setSelectedPocket] = useState<string>('single_flap');
+  const [selectedPlacket, setSelectedPlacket] = useState<string>('regular');
+  const [selectedButton, setSelectedButton] = useState<string>('mother_pearl');
+  const [selectedCuff, setSelectedCuff] = useState<string>('single_round');
+  const [selectedBack, setSelectedBack] = useState<string>('plain');
+  const canvasBaseImage = baseImage || BASE_CUSTOMIZER_IMAGE;
+
+  const handleCanvasImageError = (event: { currentTarget: HTMLImageElement }) => {
+    const target = event.currentTarget;
+    if (target.dataset.fallbackApplied === 'true') return;
+    target.dataset.fallbackApplied = 'true';
+    target.src = FALLBACK_FEATURE_IMAGE;
+  };
+
+  const handleFeatureImageError = (event: { currentTarget: HTMLImageElement }, fallbackSrc: string) => {
+    const target = event.currentTarget;
+    if (target.dataset.fallbackApplied === 'true') return;
+    target.dataset.fallbackApplied = 'true';
+    target.src = fallbackSrc;
+  };
 
   // Simplified collar drawing for the grid
   const renderCollarIcon = () => (
@@ -96,11 +224,36 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
     }
   };
 
-  const featureImages: Record<string, string> = {
-    collar: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80',
-    pocket: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&crop=edges&w=800&h=800',
-    default: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&q=80'
-  };
+  const activeFeatureImage = (() => {
+    if (!activeFeature) return FEATURE_DEFAULT_IMAGES.default;
+
+    if (activeFeature === 'collar') return COLLAR_IMAGES[selectedCollar] || FEATURE_DEFAULT_IMAGES.collar;
+    if (activeFeature === 'pocket') return POCKET_IMAGES[selectedPocket] || FEATURE_DEFAULT_IMAGES.pocket;
+    if (activeFeature === 'placket') return PLACKET_IMAGES[selectedPlacket] || FEATURE_DEFAULT_IMAGES.placket;
+    if (activeFeature === 'buttons') return BUTTON_IMAGES[selectedButton] || FEATURE_DEFAULT_IMAGES.buttons;
+    if (activeFeature === 'cuff') return CUFF_IMAGES[selectedCuff] || FEATURE_DEFAULT_IMAGES.cuff;
+    if (activeFeature === 'back') return BACK_IMAGES[selectedBack] || FEATURE_DEFAULT_IMAGES.back;
+    if (activeFeature === 'color') {
+      if (selectedColor === 'white') return canvasBaseImage;
+      return COLOR_IMAGES[selectedColor] || canvasBaseImage;
+    }
+
+    return FEATURE_DEFAULT_IMAGES[activeFeature] || FEATURE_DEFAULT_IMAGES.default;
+  })();
+
+  const activeFeatureOptionId = (() => {
+    if (!activeFeature) return 'default';
+    if (activeFeature === 'collar') return selectedCollar;
+    if (activeFeature === 'pocket') return selectedPocket;
+    if (activeFeature === 'placket') return selectedPlacket;
+    if (activeFeature === 'buttons') return selectedButton;
+    if (activeFeature === 'cuff') return selectedCuff;
+    if (activeFeature === 'back') return selectedBack;
+    if (activeFeature === 'color') return selectedColor;
+    return 'default';
+  })();
+
+  const activeFeatureFallbackImage = getOptionPlaceholderImage(activeFeature || 'style', activeFeatureOptionId);
 
   return (
     <div className="fixed inset-0 z-[100] flex bg-stone-100 animate-in fade-in duration-300">
@@ -153,16 +306,18 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
           
           {activeFeature ? (
             <img 
-              src={featureImages[activeFeature] || featureImages.default} 
+              src={activeFeatureImage} 
               alt="Zoomed Feature"
               className="w-full h-full object-cover"
+              onError={(event) => handleFeatureImageError(event, activeFeatureFallbackImage)}
             />
           ) : (
-            <div className="relative w-full max-w-[600px] aspect-square transition-transform duration-700">
+            <div className="relative w-full max-w-[600px] aspect-[3/4] transition-transform duration-700">
               <img 
-                src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80" 
+                src={canvasBaseImage}
                 alt="Shirt Canvas"
                 className="w-full h-full object-contain"
+                onError={handleCanvasImageError}
               />
               
               {/* Overlay styling for ghost mannequin effect */}
@@ -171,23 +326,23 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
               {/* Hotpoints - STYLE TAB */}
               {activeTab === 'Style' && (
                 <>
-                  <Hotspot top="15%" left="50%" label="color" onClick={() => setActiveFeature('color')} />
-                  <Hotspot top="20%" left="50%" label="COLLAR" onClick={() => setActiveFeature('collar')} />
-                  <Hotspot top="38%" left="62%" label="POCKET" onClick={() => setActiveFeature('pocket')} />
-                  <Hotspot top="48%" left="50%" label="PLACKET" onClick={() => setActiveFeature('placket')} />
-                  <Hotspot top="60%" left="50%" label="BUTTONS" onClick={() => setActiveFeature('buttons')} />
-                  <Hotspot top="70%" left="75%" label="SLEEVE & CUFF" onClick={() => setActiveFeature('cuff')} />
-                  <Hotspot top="85%" left="50%" label="BACK" onClick={() => setActiveFeature('back')} />
+                  <Hotspot top="8%" left="50%" label="COLOR" onClick={() => setActiveFeature('color')} />
+                  <Hotspot top="30%" left="50%" label="COLLAR" onClick={() => setActiveFeature('collar')} />
+                  <Hotspot top="47%" left="60%" label="POCKET" onClick={() => setActiveFeature('pocket')} />
+                  <Hotspot top="55%" left="50%" label="PLACKET" onClick={() => setActiveFeature('placket')} />
+                  <Hotspot top="74%" left="50%" label="BUTTONS" onClick={() => setActiveFeature('buttons')} />
+                  <Hotspot top="62%" left="69%" label="SLEEVE & CUFF" align="left" onClick={() => setActiveFeature('cuff')} />
+                  <Hotspot top="93%" left="50%" label="BACK" onClick={() => setActiveFeature('back')} />
                 </>
               )}
 
               {/* Hotpoints - CONTRAST TAB */}
               {activeTab === 'Contrast' && (
                 <>
-                  <Hotspot top="22%" left="50%" label="ON COLLAR" onClick={() => setActiveFeature('collar')} />
-                  <Hotspot top="45%" left="50%" label="ON CHEST" onClick={() => setActiveFeature('pocket')} />
-                  <Hotspot top="70%" left="72%" label="ON CUFF" onClick={() => setActiveFeature('cuff')} />
-                  <Hotspot top="82%" left="48%" label="ON RIB" onClick={() => setActiveFeature('back')} />
+                  <Hotspot top="15%" left="50%" label="ON COLLAR" onClick={() => setActiveFeature('collar')} />
+                  <Hotspot top="44%" left="56%" label="ON CHEST" onClick={() => setActiveFeature('pocket')} />
+                  <Hotspot top="84%" left="82%" label="ON CUFF" align="left" onClick={() => setActiveFeature('cuff')} />
+                  <Hotspot top="93%" left="50%" label="ON BACK" onClick={() => setActiveFeature('back')} />
                 </>
               )}
             </div>
@@ -215,7 +370,10 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
             <div className="h-px bg-stone-300 mb-12 w-full max-w-[100px]"></div>
 
             <div className="flex gap-4 mt-auto mb-8">
-              <button className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#66705e] transition-colors shadow-lg shadow-[#66705e]/20">
+              <button
+                onClick={onShopRedirect}
+                className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#66705e] transition-colors shadow-lg shadow-[#66705e]/20"
+              >
                 ADD TO BAG
               </button>
               <button className="w-14 h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
@@ -267,11 +425,12 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
             <div className="flex-1 overflow-y-auto p-8">
               {activeFeature === 'collar' && (
                 <div className="grid grid-cols-3 gap-4">
-                  {COLLAR_OPTIONS.map((opt, idx) => (
+                  {COLLAR_OPTIONS.map((opt) => (
                     <button 
                       key={opt.id}
+                      onClick={() => setSelectedCollar(opt.id)}
                       className={`aspect-square border rounded-[4px] p-4 flex flex-col items-center justify-center gap-4 transition-all
-                        ${idx === 0 ? 'border-[#7a8572] shadow-sm' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
+                        ${selectedCollar === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-sm' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
                       `}
                     >
                       {renderCollarIcon()}
@@ -283,7 +442,7 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
 
               {activeFeature === 'pocket' && (
                 <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
-                  {POCKET_OPTIONS.map((opt, idx) => (
+                  {POCKET_OPTIONS.map((opt) => (
                     <button 
                       key={opt.id}
                       onClick={() => setSelectedPocket(opt.id)}
@@ -298,6 +457,70 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
                       {selectedPocket === opt.id && (
                         <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#7a8572]"></div>
                       )}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {activeFeature === 'placket' && (
+                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                  {PLACKET_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedPlacket(opt.id)}
+                      className={`aspect-square border rounded-[4px] p-4 flex items-center justify-center text-center transition-all
+                        ${selectedPlacket === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-sm text-stone-900' : 'border-[#cfc5b8] text-stone-600 hover:border-[#8b9382]'}
+                      `}
+                    >
+                      <span className="text-sm font-medium">{opt.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {activeFeature === 'buttons' && (
+                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                  {BUTTON_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedButton(opt.id)}
+                      className={`aspect-square border rounded-[4px] p-4 flex items-center justify-center text-center transition-all
+                        ${selectedButton === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-sm text-stone-900' : 'border-[#cfc5b8] text-stone-600 hover:border-[#8b9382]'}
+                      `}
+                    >
+                      <span className="text-sm font-medium">{opt.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {activeFeature === 'cuff' && (
+                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                  {CUFF_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedCuff(opt.id)}
+                      className={`aspect-square border rounded-[4px] p-4 flex items-center justify-center text-center transition-all
+                        ${selectedCuff === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-sm text-stone-900' : 'border-[#cfc5b8] text-stone-600 hover:border-[#8b9382]'}
+                      `}
+                    >
+                      <span className="text-sm font-medium">{opt.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {activeFeature === 'back' && (
+                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                  {BACK_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedBack(opt.id)}
+                      className={`aspect-square border rounded-[4px] p-4 flex items-center justify-center text-center transition-all
+                        ${selectedBack === opt.id ? 'border-[#7a8572] bg-stone-100 shadow-sm text-stone-900' : 'border-[#cfc5b8] text-stone-600 hover:border-[#8b9382]'}
+                      `}
+                    >
+                      <span className="text-sm font-medium">{opt.name}</span>
                     </button>
                   ))}
                 </div>
@@ -352,7 +575,10 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
                 CANCEL
               </button>
               <button 
-                onClick={() => setActiveFeature(null)}
+                onClick={() => {
+                  setActiveFeature(null);
+                  onShopRedirect?.();
+                }}
                 className="py-4 bg-[#7a8572] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-[#f7f4ef] hover:bg-[#66705e] transition-colors"
               >
                 APPLY
@@ -367,19 +593,32 @@ export default function Customizer({ onClose, productName, price }: CustomizerPr
 }
 
 // Reusable hotspot component
-function Hotspot({ top, left, label, onClick }: { top: string; left: string; label: string; onClick: () => void }) {
+function Hotspot({ top, left, label, align = 'right', onClick }: { top: string; left: string; label: string; align?: 'left' | 'right'; onClick: () => void }) {
   return (
     <div 
       className="absolute flex items-center group cursor-pointer -translate-x-4 -translate-y-4 shadow-sm"
       style={{ top, left }}
       onClick={onClick}
     >
-      <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-        <span className="text-xl font-light leading-none mb-0.5">+</span>
-      </div>
-      <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-r-full px-4 flex items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors">
-        {label}
-      </div>
+      {align === 'left' ? (
+        <>
+          <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-l-full px-4 flex items-center -mr-4 pr-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
+            {label}
+          </div>
+          <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <span className="text-xl font-light leading-none mb-0.5">+</span>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <span className="text-xl font-light leading-none mb-0.5">+</span>
+          </div>
+          <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-r-full px-4 flex items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
+            {label}
+          </div>
+        </>
+      )}
     </div>
   );
 }
