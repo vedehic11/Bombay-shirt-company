@@ -7,7 +7,7 @@ const slides = [
     subtitle: 'Luxury linen and affordable linen-cotton blends, tailored strictly to your measurements.',
     cta: 'DESIGN YOUR FIT',
     video: 'https://player.vimeo.com/external/517090081.sd.mp4?s=d98dc43de7069811bb1f20b852dbb09b4db0c5a2&profile_id=164&oauth2_token_id=57447761',
-    image: 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=1920&h=1080&fit=crop&crop=center',
+    image: '/shirts/shirt5/1.png',
     isVideo: false
   },
   {
@@ -34,7 +34,7 @@ export default function Hero({ onShopRedirect }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const fallbackHeroImage = 'https://images.unsplash.com/photo-1593030103066-0093718efeb9?w=1920&h=1080&fit=crop&crop=center';
+  const fallbackHeroImage = '/shirts/shirt4/1.png';
 
   const handleImageError = (event: { currentTarget: HTMLImageElement }) => {
     const target = event.currentTarget;
