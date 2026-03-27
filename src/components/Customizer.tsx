@@ -256,23 +256,23 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
   const activeFeatureFallbackImage = getOptionPlaceholderImage(activeFeature || 'style', activeFeatureOptionId);
 
   return (
-    <div className="fixed inset-0 z-[100] flex bg-stone-100 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[100] flex flex-col lg:flex-row bg-stone-100 animate-in fade-in duration-300 overflow-hidden">
       
       {/* LEFT PANEL */}
-      <div className={`relative ${activeFeature ? 'w-1/2' : 'w-2/3'} flex flex-col transition-all duration-500`}>
+      <div className={`relative w-full ${activeFeature ? 'h-[48%] lg:h-auto lg:w-1/2' : 'h-[55%] lg:h-auto lg:w-2/3'} flex flex-col transition-all duration-500`}>
         
         {/* Header Left */}
-        <div className="flex items-center justify-between p-6 px-8 z-10">
+        <div className="flex items-center justify-between p-4 sm:p-6 sm:px-8 z-10">
           <button onClick={onClose} className="p-2 hover:bg-stone-200 rounded-full transition-colors cursor-pointer">
             <X className="w-6 h-6" />
           </button>
           
-          <h1 className="text-sm font-semibold tracking-[0.2em] uppercase text-stone-900 absolute left-1/2 -translate-x-1/2">
+          <h1 className="text-[11px] sm:text-sm font-semibold tracking-[0.2em] uppercase text-stone-900 absolute left-1/2 -translate-x-1/2">
             CUSTOMISE
           </h1>
 
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-semibold tracking-widest text-stone-500 uppercase">PREVIEW SHIRT</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="hidden sm:inline text-[10px] font-semibold tracking-widest text-stone-500 uppercase">PREVIEW SHIRT</span>
             <button 
               onClick={() => setPreviewShirt(!previewShirt)}
               className={`w-11 h-6 rounded-full border border-[#cfc5b8] p-0.5 transition-colors ${previewShirt ? 'bg-[#7a8572]' : 'bg-transparent'}`}
@@ -284,13 +284,13 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
 
         {/* Top Tabs */}
         {!activeFeature && (
-          <div className="flex justify-center mt-2 z-10 px-4">
-            <div className="flex border border-stone-300 rounded-full rounded-l-full rounded-r-full p-1 bg-stone-100">
+          <div className="flex justify-center mt-1 sm:mt-2 z-10 px-2 sm:px-4">
+            <div className="flex border border-stone-300 rounded-full rounded-l-full rounded-r-full p-1 bg-stone-100 max-w-full overflow-x-auto">
               {['Style', 'Contrast', 'Monogram'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab as TabType)}
-                  className={`px-12 py-2.5 rounded-full text-xs font-medium tracking-wide transition-all ${
+                  className={`px-5 sm:px-8 lg:px-12 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-medium tracking-wide transition-all whitespace-nowrap ${
                     activeTab === tab ? 'bg-[#7a8572] text-[#f7f4ef]' : 'text-stone-500 hover:text-stone-900'
                   }`}
                 >
@@ -312,7 +312,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               onError={(event) => handleFeatureImageError(event, activeFeatureFallbackImage)}
             />
           ) : (
-            <div className="relative w-full max-w-[600px] aspect-[3/4] transition-transform duration-700">
+            <div className="relative w-full max-w-[360px] sm:max-w-[460px] lg:max-w-[600px] aspect-[3/4] transition-transform duration-700">
               <img 
                 src={canvasBaseImage}
                 alt="Shirt Canvas"
@@ -351,32 +351,32 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
       </div>
 
       {/* RIGHT PANEL */}
-      <div className={`relative ${activeFeature ? 'w-1/2' : 'w-1/3'} bg-stone-50 h-full shadow-2xl transition-all duration-500 flex flex-col`}>
+      <div className={`relative w-full ${activeFeature ? 'h-[52%] lg:h-full lg:w-1/2' : 'h-[45%] lg:h-full lg:w-1/3'} bg-stone-50 shadow-2xl transition-all duration-500 flex flex-col`}>
         
         {/* Default View (No feature selected) */}
         {!activeFeature ? (
-          <div className="flex-1 flex flex-col p-12 lg:p-16">
-            <div className="flex gap-2 mb-6 mt-32">
+          <div className="flex-1 flex flex-col p-5 sm:p-8 lg:p-16">
+            <div className="flex gap-2 mb-4 sm:mb-6 mt-2 sm:mt-8 lg:mt-32">
               <span className="px-3 py-1 bg-[#fdf5ed] text-[#d69f69] text-xs font-medium rounded-full">Customisable</span>
               <span className="px-3 py-1 bg-[#eaf7ed] text-[#4ea065] text-xs font-medium rounded-full">New</span>
             </div>
 
-            <h2 className="text-[28px] font-light text-stone-900 mb-3 leading-tight">{productName}</h2>
-            <p className="text-stone-900 mb-12">
-              <span className="text-[20px] font-medium">₹ {price.toLocaleString('en-IN')}</span>
+            <h2 className="text-2xl sm:text-[28px] font-light text-stone-900 mb-3 leading-tight">{productName}</h2>
+            <p className="text-stone-900 mb-6 sm:mb-10 lg:mb-12">
+              <span className="text-lg sm:text-[20px] font-medium">₹ {price.toLocaleString('en-IN')}</span>
               <span className="text-[11px] text-stone-500 ml-2 uppercase tracking-wide">Incl. of all taxes</span>
             </p>
 
-            <div className="h-px bg-stone-300 mb-12 w-full max-w-[100px]"></div>
+            <div className="h-px bg-stone-300 mb-6 sm:mb-10 lg:mb-12 w-full max-w-[100px]"></div>
 
-            <div className="flex gap-4 mt-auto mb-8">
+            <div className="flex gap-3 sm:gap-4 mt-auto mb-2 sm:mb-6 lg:mb-8">
               <button
                 onClick={onShopRedirect}
-                className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-4 rounded-full text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#66705e] transition-colors shadow-lg shadow-[#66705e]/20"
+                className="flex-1 bg-[#7a8572] text-[#f7f4ef] py-3.5 sm:py-4 rounded-full text-[11px] sm:text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#66705e] transition-colors shadow-lg shadow-[#66705e]/20"
               >
                 ADD TO BAG
               </button>
-              <button className="w-14 h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
+              <button className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center border border-[#cfc5b8] rounded-full hover:border-[#7a8572] transition-colors">
                 <Heart className="w-5 h-5 text-stone-600" />
               </button>
             </div>
@@ -386,15 +386,15 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
           <div className="flex-1 flex flex-col h-full bg-stone-50">
             
             {/* Top Navigation for editing inside right panel */}
-            <div className="flex items-center justify-between border-b border-stone-200 px-8 py-5 min-h-[72px]">
+            <div className="flex items-center justify-between border-b border-stone-200 px-4 sm:px-6 lg:px-8 py-4 sm:py-5 min-h-[64px] sm:min-h-[72px]">
               {activeFeature === 'collar' ? (
                 <>
-                  <div className="flex space-x-12">
+                  <div className="flex flex-wrap gap-4 sm:gap-8 lg:gap-12">
                     {['Style', 'Top Button', 'Stiffness'].map((subtab) => (
                       <button 
                         key={subtab}
                         onClick={() => setActiveSubTab(subtab as SubTabType)}
-                        className={`text-sm font-medium tracking-wide transition-colors ${
+                        className={`text-xs sm:text-sm font-medium tracking-wide transition-colors ${
                           activeSubTab === subtab ? 'text-stone-900' : 'text-stone-400 hover:text-stone-600'
                         }`}
                       >
@@ -402,7 +402,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
                       </button>
                     ))}
                   </div>
-                  <button className="text-sm font-semibold tracking-wide text-amber-700 hover:text-amber-800">
+                  <button className="text-xs sm:text-sm font-semibold tracking-wide text-amber-700 hover:text-amber-800">
                     Guide
                   </button>
                 </>
@@ -422,9 +422,9 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
             </div>
 
             {/* Grid Options Container */}
-            <div className="flex-1 overflow-y-auto p-8">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
               {activeFeature === 'collar' && (
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                   {COLLAR_OPTIONS.map((opt) => (
                     <button 
                       key={opt.id}
@@ -441,7 +441,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               )}
 
               {activeFeature === 'pocket' && (
-                <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto">
                   {POCKET_OPTIONS.map((opt) => (
                     <button 
                       key={opt.id}
@@ -463,7 +463,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               )}
 
               {activeFeature === 'placket' && (
-                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
                   {PLACKET_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -479,7 +479,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               )}
 
               {activeFeature === 'buttons' && (
-                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
                   {BUTTON_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -495,7 +495,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               )}
 
               {activeFeature === 'cuff' && (
-                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
                   {CUFF_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -511,7 +511,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
               )}
 
               {activeFeature === 'back' && (
-                <div className="grid grid-cols-2 gap-4 max-w-3xl mx-auto">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
                   {BACK_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -528,7 +528,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
 
               {activeFeature === 'color' && (
                 <div className="max-w-4xl mx-auto">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     {COLOR_OPTIONS.map((color) => (
                       <button
                         key={color.id}
@@ -536,7 +536,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
                         className="flex flex-col items-center gap-3 group transition-all"
                       >
                         <div 
-                          className={`w-20 h-20 rounded-lg border-2 shadow-md transition-all group-hover:scale-105 flex items-center justify-center
+                          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-lg border-2 shadow-md transition-all group-hover:scale-105 flex items-center justify-center
                             ${selectedColor === color.id ? 'border-[#7a8572] ring-2 ring-[#d1c8bc]' : 'border-[#cfc5b8] hover:border-[#8b9382]'}
                           `}
                           style={{ backgroundColor: color.hex, borderColor: color.border }}
@@ -549,11 +549,11 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
                       </button>
                     ))}
                   </div>
-                  <div className="bg-stone-100 p-6 rounded-lg border border-stone-300">
+                  <div className="bg-stone-100 p-4 sm:p-6 rounded-lg border border-stone-300">
                     <p className="text-xs text-stone-500 font-semibold tracking-wide uppercase mb-2">Preview</p>
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-4 sm:gap-8">
                       <div 
-                        className="w-32 h-40 rounded-lg shadow-lg" 
+                        className="w-24 h-32 sm:w-32 sm:h-40 rounded-lg shadow-lg" 
                         style={{ backgroundColor: COLOR_OPTIONS.find(c => c.id === selectedColor)?.hex }}
                       ></div>
                       <div>
@@ -567,10 +567,10 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
             </div>
 
             {/* Sticky Bottom Actions */}
-            <div className="p-8 border-t border-stone-200 bg-stone-50 grid grid-cols-2 gap-4">
+            <div className="p-4 sm:p-6 lg:p-8 border-t border-stone-200 bg-stone-50 grid grid-cols-2 gap-3 sm:gap-4">
               <button 
                 onClick={() => setActiveFeature(null)}
-                className="py-4 border-2 border-[#7a8572] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-[#5f6853] hover:bg-[#efeae3] transition-colors"
+                className="py-3.5 sm:py-4 border-2 border-[#7a8572] rounded-full text-[11px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#5f6853] hover:bg-[#efeae3] transition-colors"
               >
                 CANCEL
               </button>
@@ -579,7 +579,7 @@ export default function Customizer({ onClose, productName, price, onShopRedirect
                   setActiveFeature(null);
                   onShopRedirect?.();
                 }}
-                className="py-4 bg-[#7a8572] rounded-full text-xs font-bold tracking-[0.15em] uppercase text-[#f7f4ef] hover:bg-[#66705e] transition-colors"
+                className="py-3.5 sm:py-4 bg-[#7a8572] rounded-full text-[11px] sm:text-xs font-bold tracking-[0.15em] uppercase text-[#f7f4ef] hover:bg-[#66705e] transition-colors"
               >
                 APPLY
               </button>
@@ -602,19 +602,19 @@ function Hotspot({ top, left, label, align = 'right', onClick }: { top: string; 
     >
       {align === 'left' ? (
         <>
-          <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-l-full px-4 flex items-center -mr-4 pr-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
+          <div className="hidden sm:flex bg-stone-50/95 backdrop-blur-md h-7 rounded-l-full px-4 items-center -mr-4 pr-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
             {label}
           </div>
-          <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <span className="text-xl font-light leading-none mb-0.5">+</span>
+          <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <span className="text-lg sm:text-xl font-light leading-none mb-0.5">+</span>
           </div>
         </>
       ) : (
         <>
-          <div className="relative z-10 w-8 h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <span className="text-xl font-light leading-none mb-0.5">+</span>
+          <div className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-700 text-stone-50 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+            <span className="text-lg sm:text-xl font-light leading-none mb-0.5">+</span>
           </div>
-          <div className="bg-stone-50/95 backdrop-blur-md h-7 rounded-r-full px-4 flex items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
+          <div className="hidden sm:flex bg-stone-50/95 backdrop-blur-md h-7 rounded-r-full px-4 items-center -ml-4 pl-6 text-[10px] font-bold tracking-widest text-stone-900 shadow-sm uppercase group-hover:bg-stone-100 transition-colors whitespace-nowrap">
             {label}
           </div>
         </>
