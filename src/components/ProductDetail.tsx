@@ -8,6 +8,8 @@ interface ProductDetailProps {
   onShopRedirect: () => void;
 }
 
+const normalizePrice = (value: number) => Math.min(3000, Math.max(1000, value));
+
 const PRODUCT_DETAILS: Record<string, { name: string; price: number; images: string[] }> = {
   '1': {
     name: 'Brushed Herringbone Linen - Navy',
@@ -36,6 +38,7 @@ export default function ProductDetail({ productId, onBack, onShopRedirect }: Pro
   const [isCustomizing, setIsCustomizing] = useState(false);
 
   const currentProduct = PRODUCT_DETAILS[productId] || PRODUCT_DETAILS['1'];
+  const normalizedProductPrice = normalizePrice(currentProduct.price);
   const galleryImages =
     currentProduct.images.length >= 4
       ? currentProduct.images.slice(0, 4)
@@ -95,7 +98,7 @@ export default function ProductDetail({ productId, onBack, onShopRedirect }: Pro
                 {currentProduct.name}
               </h1>
               <p className="text-stone-900 mb-1">
-                <span className="text-lg">₹ {currentProduct.price.toLocaleString('en-IN')}</span>
+                <span className="text-lg">₹ {normalizedProductPrice.toLocaleString('en-IN')}</span>
                 <span className="text-xs text-stone-500 ml-2">Incl. of all taxes</span>
               </p>
 
@@ -205,7 +208,7 @@ export default function ProductDetail({ productId, onBack, onShopRedirect }: Pro
       <Customizer
         onClose={() => setIsCustomizing(false)}
         productName={currentProduct.name}
-        price={currentProduct.price}
+        price={normalizedProductPrice}
         baseImage={currentProduct.images[0]}
         onShopRedirect={onShopRedirect}
       />

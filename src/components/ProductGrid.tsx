@@ -14,6 +14,8 @@ interface ProductGridProps {
   onProductClick?: (productId: string) => void;
 }
 
+const normalizePrice = (value: number) => Math.min(3000, Math.max(1000, value));
+
 const fallbackProducts: Product[] = [
   {
     id: '1',
@@ -78,8 +80,22 @@ export default function ProductGrid({ onProductClick }: ProductGridProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Deliberately bypassing Supabase to enforce the new Linen catalog and pricing (1300-3000)
-    setProducts(fallbackProducts);
+    // Deliberately bypassing Supabase to enforce the new Linen catalog and pricing (1000-3000)
+    const normalizedProducts = fallbackProducts.map((product) => {
+      const normalizedPrice = normalizePrice(product.price);
+      const normalizedSalePrice =
+        product.sale_price === null
+          ? null
+          : Math.min(normalizedPrice, normalizePrice(product.sale_price));
+
+      return {
+        ...product,
+        price: normalizedPrice,
+        sale_price: normalizedSalePrice,
+      };
+    });
+
+    setProducts(normalizedProducts);
     setLoading(false);
   }, []);
 

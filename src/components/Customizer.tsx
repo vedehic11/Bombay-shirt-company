@@ -90,19 +90,19 @@ const COLLAR_IMAGES: Record<string, string> = {
   spread: '/customizer/collars/spread-collar.png',
   bandhgala: '/customizer/collars/bandgala.png',
   club: '/customizer/collars/club-collar.png',
-  concealed: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&crop=faces&w=1200&q=80',
-  cuban: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=center&w=1200&q=80',
-  hipster: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&crop=center&w=1200&q=80',
-  hipster_rounded: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&crop=top&w=1200&q=80',
-  madmen: '/customizer/collars/madmen.png',
-  prince: 'https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&crop=top&w=1200&q=80'
+  concealed: '/customizer/collars/polo-collar.png',
+  cuban: '/customizer/collars/spread-collar.png',
+  hipster: '/customizer/collars/bandgala.png',
+  hipster_rounded: '/customizer/collars/club-collar.png',
+  madmen: '/customizer/collars/polo-collar.png',
+  prince: '/customizer/collars/spread-collar.png'
 };
 
 const POCKET_IMAGES: Record<string, string> = {
-  no_pocket: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?auto=format&fit=crop&w=1200&q=80',
-  double_flap: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=right&w=1200&q=80',
-  single: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=center&w=1200&q=80',
-  single_flap: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&crop=left&w=1200&q=80'
+  no_pocket: '/customizer/pockets/no-pocket.png',
+  double_flap: '/customizer/pockets/no-pocket.png',
+  single: '/customizer/pockets/single-pocket.png',
+  single_flap: '/customizer/pockets/single-pocket.png'
 };
 
 const PLACKET_IMAGES: Record<string, string> = {
