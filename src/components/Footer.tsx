@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">LUXE THREADS</h3>
+            <h3 className="font-bold text-lg mb-4">linNcraft</h3>
             <p className="text-[#6a745f] text-sm">
               Premium custom tailoring and ready-to-wear clothing for the modern individual.
             </p>
@@ -52,7 +52,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-[#cfc5b8] pt-8 text-center text-sm text-[#6a745f]">
-          <p>&copy; 2026 Luxe Threads. All rights reserved.</p>
+          <p>&copy; 2026 linNcraft. All rights reserved.</p>
         </div>
       </div>
     </footer>
